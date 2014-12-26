@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/KOMORAN_2.0_beta"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Shineware_Common_Library"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Shineware_DS_Library"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
