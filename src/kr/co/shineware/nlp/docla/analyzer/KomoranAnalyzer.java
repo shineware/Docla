@@ -17,7 +17,7 @@ public class KomoranAnalyzer implements Analyzer{
 		List<List<Pair<String,String>>> analyzeResult = komoran.analyze(in);
 		for (List<Pair<String, String>> wordResultList : analyzeResult) {
 			for (Pair<String, String> morphPos : wordResultList) {
-				if(morphPos.getFirst().trim().length() == 0){
+				if(morphPos.getFirst().trim().length() == 0 || morphPos.getSecond().charAt(0) != 'N'){
 					continue;
 				}
 				sb.append(morphPos.getFirst()+"/"+morphPos.getSecond()+" ");
