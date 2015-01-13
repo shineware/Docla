@@ -13,21 +13,21 @@ import kr.co.shineware.nlp.docla.db.DoclaDb;
 import kr.co.shineware.util.common.collection.MapUtil;
 
 public class Docla {
-	private final static String PREFIX_WORD = "_WORD_";
-	private final static String PREFIX_LABEL = "_LABEL_";
+//	private final static String PREFIX_WORD = "_WORD_";
+//	private final static String PREFIX_LABEL = "_LABEL_";
 	private Analyzer analyzer;
 	private DoclaDb tfDb = null;
 	private DoclaDb dfDb = null;
 	private DoclaDb coDb = null;
 	
 	public Docla(){
-		tfDb = new DoclaDb();
+		tfDb = new DoclaDb("tf");
 		tfDb.createTable();
 		
-		dfDb = new DoclaDb();
+		dfDb = new DoclaDb("df");
 		dfDb.createTable();
 		
-		coDb = new DoclaDb();
+		coDb = new DoclaDb("co");
 		coDb.createTable();
 	}
 	public void initDb(){
@@ -43,7 +43,7 @@ public class Docla {
 	public void setAnalyzer(Analyzer analyzer){
 		this.analyzer = analyzer;
 	}
-	public void addDoc(String filename,String label){		
+	public void addDoc(String filename,String label){
 		try {
 			Map<String,Integer> tfMap = new HashMap<>();
 			File file = new File(filename);
@@ -76,8 +76,8 @@ public class Docla {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		tfDb.print();
-//		dfDb.print();
+		tfDb.print();
+		dfDb.print();
 		coDb.print();
 	}
 	public void train(){
