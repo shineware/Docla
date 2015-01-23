@@ -8,41 +8,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import kr.co.shineware.interfaces.Analyzer;
-import kr.co.shineware.nlp.docla.db.DoclaDb;
-import kr.co.shineware.util.common.collection.MapUtil;
+import kr.co.shineware.nlp.docla.db.DoclaDbImpl;
+import kr.co.shineware.nlp.docla.interfaces.Analyzer;
+import kr.co.shineware.nlp.docla.interfaces.DoclaDb;
 
 public class Docla {
-//	private final static String PREFIX_WORD = "_WORD_";
-//	private final static String PREFIX_LABEL = "_LABEL_";
+	
 	private Analyzer analyzer;
-	private DoclaDb tfDb = null;
-	private DoclaDb dfDb = null;
-	private DoclaDb coDb = null;
+	private DoclaDb doclaDb;
 	
 	public Docla(){
-		tfDb = new DoclaDb("tf");
-		tfDb.createTable();
-		
-		dfDb = new DoclaDb("df");
-		dfDb.createTable();
-		
-		coDb = new DoclaDb("co");
-		coDb.createTable();
+		doclaDb = new DoclaDbImpl();
 	}
-	public void initDb(){
-		tfDb.dropTable();
-		tfDb.createTable();
-		
-		dfDb.dropTable();
-		dfDb.createTable();
-		
-		coDb.dropTable();
-		coDb.createTable();
-	}
+	
 	public void setAnalyzer(Analyzer analyzer){
 		this.analyzer = analyzer;
 	}
+	
 	public void addDoc(String filename,String label){
 		try {
 			Map<String,Integer> tfMap = new HashMap<>();
@@ -65,22 +47,25 @@ public class Docla {
 			}
 			Set<Entry<String,Integer>> entrySet = tfMap.entrySet();
 			for (Entry<String, Integer> entry : entrySet) {
-				tfDb.incTf(entry.getKey(), entry.getValue());
-				coDb.incTf(entry.getKey()+" "+label);
+				//tf
+				doclaDb.incTf(entry.getKey(), entry.getValue());
+				//label tf co-occur
+				doclaDb.incCooccurFreq(entry.getKey(), label);
 			}
-			
-			dfDb.incTf(label);
+			//label
+			doclaDb.incCategoryFreq(label);
 			
 			br.close();
-			System.out.println(MapUtil.sortByValue(tfMap,MapUtil.DESCENDING_ORDER));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		tfDb.print();
-		dfDb.print();
-		coDb.print();
 	}
 	public void train(){
 		;
+	}
+	
+	public String classification(String file) {
+		
+		return null;
 	}
 }

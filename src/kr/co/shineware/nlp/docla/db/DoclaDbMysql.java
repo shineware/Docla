@@ -1,12 +1,12 @@
 package kr.co.shineware.nlp.docla.db;
 
-public class DoclaDb extends DbManager{
+public class DoclaDbMysql extends DbManager{
 	
 	private String tableName = "wordDb";
 	private final static String FIELD_WORD = "token";
 	private final static String FIELD_TF = "freq";
 	
-	public DoclaDb(String tableName){
+	public DoclaDbMysql(String tableName){
 		super();
 		super.setConnection("jdbc:sqlite:docla.freq.db");
 		this.tableName = tableName;

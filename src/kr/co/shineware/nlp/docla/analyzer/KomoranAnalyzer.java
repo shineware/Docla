@@ -2,7 +2,7 @@ package kr.co.shineware.nlp.docla.analyzer;
 
 import java.util.List;
 
-import kr.co.shineware.interfaces.Analyzer;
+import kr.co.shineware.nlp.docla.interfaces.Analyzer;
 import kr.co.shineware.nlp.komoran.core.analyzer.Komoran;
 import kr.co.shineware.util.common.model.Pair;
 

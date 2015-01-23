@@ -6,8 +6,11 @@ import kr.co.shineware.nlp.docla.analyzer.KomoranAnalyzer;
 public class DoclaTest {
 	public static void main(String[] args){
 		Docla docla = new Docla();
-		docla.initDb();
+//		docla.initDb();
 		docla.setAnalyzer(new KomoranAnalyzer());
 		docla.addDoc("news.test", "sports");
+		
+		String label = docla.classification("news.test");
+		
 	}
 }
