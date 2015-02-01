@@ -1,5 +1,7 @@
 package kr.co.shineware.nlp.docla.interfaces;
 
+import java.util.Set;
+
 public interface DoclaDb {
 	public int getCooccurFreq(String term,String category);
 	public int getTotalTf();
@@ -13,6 +15,9 @@ public interface DoclaDb {
 	public void incTf(String term,int tf);
 	public void incCategoryFreq(String category);
 	public void incCategoryFreq(String category,int freq);
+	
+	public Set<String> getTerms();
+	public Set<String> getCategories();
 	
 	public void save(String filename);
 	public void load(String filename);

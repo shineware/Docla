@@ -2,6 +2,7 @@ package kr.co.shineware.nlp.docla.db;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import kr.co.shineware.nlp.docla.interfaces.DoclaDb;
 
@@ -99,6 +100,16 @@ public class DoclaDbImpl implements DoclaDb{
 	@Override
 	public void incCooccurFreq(String term, String category, int freq) {
 		this.putIntToMap(String.format(COOCUR_FORMAT, term,category), freq, this.cooccureFreqMap);
+	}
+	@Override
+	public Set<String> getTerms() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Set<String> getCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
