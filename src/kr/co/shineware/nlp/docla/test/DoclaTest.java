@@ -2,11 +2,8 @@ package kr.co.shineware.nlp.docla.test;
 
 import java.io.File;
 
-import kr.co.shineware.nlp.docla.analyzer.KomoranAnalyzer;
-import kr.co.shineware.nlp.docla.core.Docla;
-
 public class DoclaTest {
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 //		Docla docla = new Docla();
 //		docla.setAnalyzer(new KomoranAnalyzer());
 //		long begin = System.currentTimeMillis();
@@ -18,7 +15,11 @@ public class DoclaTest {
 //		System.out.println("Elapsed time = "+(end-begin)/1000.0+" sec");
 //		
 		HKIBParser parser = new HKIBParser();
-		parser.getDoc(new File("HKIB20000/HKIB-20000_001.txt"));
+		parser.setDoc(new File("HKIB20000/HKIB-20000_001.txt"));
+		HKIBDoc doc = null;
+		while((doc = parser.next()) != null){
+			;
+		}
 		
 	}
 }
