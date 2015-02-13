@@ -6,7 +6,11 @@ import java.io.FileReader;
 
 public class HKIBParser {
 	private BufferedReader br;
+	
 	public HKIBDoc next() throws Exception{
+		if(br == null){
+			return null;
+		}
 		HKIBDoc doc = new HKIBDoc();
 		String line = null;
 		String title = null;
@@ -50,6 +54,7 @@ public class HKIBParser {
 			}
 		}
 		br.close();
+		br = null;
 		if(category != null){
 			doc.setCategory(category);
 			doc.setText(sb.toString());

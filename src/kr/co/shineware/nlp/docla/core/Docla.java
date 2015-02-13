@@ -102,11 +102,49 @@ public class Docla {
 		//		int totalTf = doclaDb.getTotalTf();
 	}
 
-	public String classification(String filename) {
+	public String classification(String contents){
+		Map<String, Double> resultMap = new HashMap<>();
+		Set<String> categoryNames = nb.getCategoryNames();
+		
+		String rawTokens = analyzer.analyze(contents).trim();
+		String[] tokens = rawTokens.split(" ");
+
+		for (String categoryName : categoryNames) {
+			double categoryResult = 0.0;
+			for (String token : tokens) {
+				if(token.trim().length() == 0)continue;
+				double condProb = (double)nb.getCooccurence(token, categoryName) / nb.getCategoryTermsFreq(categoryName);
+				double postProb = (double)nb.getDf(categoryName) / nb.getTotalDf();
+				categoryResult += (Math.log(condProb) + Math.log(postProb));
+			}
+			if(categoryResult == 0.0)continue;
+			Double resultScore = resultMap.get(categoryName);
+			if(resultScore == null){
+				resultScore = 0.0;
+			}
+			resultScore += categoryResult;
+			resultMap.put(categoryName, resultScore);
+		}
+		resultMap = MapUtil.sortByValue(resultMap, MapUtil.DESCENDING_ORDER);
+		Set<Entry<String,Double>> entrySet = resultMap.entrySet();
+//		int nbest = 5;
+		for (Entry<String, Double> entry : entrySet) {
+			return entry.getKey();
+//			System.out.println(entry.getKey()+" : "+entry.getValue());
+//			nbest--;
+//			if(nbest == 0){
+//				break;
+//			}
+		}
+		return null;
+	}
+	public Set<String> getCategoryNames(){
+		return nb.getCategoryNames();
+	}
+	public String classification(File file) {
 		try{
 			Map<String, Double> resultMap = new HashMap<>();
 			Set<String> categoryNames = nb.getCategoryNames();
-			File file = new File(filename);
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line = null;
 			while((line = br.readLine()) != null){
@@ -145,5 +183,13 @@ public class Docla {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void save(String filename) {
+		nb.save(filename);	
+	}
+
+	public void load(String filename) {
+		nb.load(filename);
 	}
 }

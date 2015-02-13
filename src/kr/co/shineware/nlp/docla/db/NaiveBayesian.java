@@ -1,18 +1,54 @@
 package kr.co.shineware.nlp.docla.db;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class NaiveBayesian{
 	
-	private Map<String,Integer> dfMap;
+	private Map<String, Integer> dfMap;
 	private Map<String, Integer> cooccurMap;
 	private Map<String, Integer> categoryTermMap;
 	private int totalDf;
 	
 	public NaiveBayesian(){
 		this.init();
+	}
+	
+	public void save(String filename){
+		ObjectOutputStream dos;
+		try {
+			dos = new ObjectOutputStream(new BufferedOutputStream(new GZIPOutputStream(new FileOutputStream(filename))));
+			dos.writeObject(dfMap);
+			dos.writeObject(cooccurMap);
+			dos.writeObject(categoryTermMap);
+			dos.writeInt(totalDf);
+			dos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public void load(String filename){
+		ObjectInputStream dis;
+		try {
+			dis = new ObjectInputStream(new BufferedInputStream(new GZIPInputStream(new FileInputStream(filename))));
+			dfMap = (Map<String, Integer>) dis.readObject();
+			cooccurMap = (Map<String, Integer>) dis.readObject();
+			categoryTermMap = (Map<String, Integer>) dis.readObject();
+			totalDf = dis.readInt();
+			dis.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void init() {
